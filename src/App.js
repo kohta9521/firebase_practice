@@ -11,13 +11,19 @@ function App() {
     const postData = collection(db, "posts");
     console.log(postData);
     getDocs(postData).then((snapShot) => {
-      console.log(snapShot.docs.map((doc) => doc));
+      // console.log(snapShot.docs.map((doc) => doc));
+      setPosts(snapShot.docs.map((doc) => ({ ...doc.data() })));
     });
   }, []);
 
   return (
     <div className="App">
-      <h1></h1>
+      {posts.map((post) => (
+        <div key={post.title}>
+          <h1>{post.title}</h1>
+          <p>{post.text}</p>
+        </div>
+      ))}
     </div>
   );
 }
